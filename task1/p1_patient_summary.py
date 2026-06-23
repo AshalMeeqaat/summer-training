@@ -16,7 +16,7 @@ patients = [
 def total_patients(patient_records):
     """Return the total number of patients."""
     print("Total patients are : ")
-    print (len(patient_records))
+    return (len(patient_records))
     # TODO: Implement this function.
     pass
 
@@ -29,7 +29,7 @@ def average_age(patient_records):
         sum_age += age["age"]
         
     avg_age = sum_age / len(patient_records)
-    print(avg_age)
+    return(avg_age)
     # TODO: Implement this function.
     pass
 
@@ -43,7 +43,7 @@ def count_active_patients(patient_records):
             active_count+=1
     
     print ("Active patients are: ")
-    print (active_count)
+    return (active_count)
     pass
 
 
@@ -61,7 +61,7 @@ def unique_conditions(patient_records):
         
     
     unique_conditions.sort()
-    print(unique_conditions)
+    return unique_conditions
     # TODO: Implement this function.
     pass
 
@@ -80,15 +80,15 @@ def count_by_condition(patient_records):
         else:
             condition_counted_list[unique_cond] = 1
     
-    print(condition_counted_list)
+    return condition_counted_list
     pass
 
 
 if __name__ == "__main__":
     # TODO: Print the summary results clearly.
-    total_patients(patients)
-    average_age(patients)
-    count_active_patients(patients)
-    unique_conditions(patients)
-    count_by_condition(patients)
+    print (total_patients(patients))
+    print ( average_age(patients) )
+    print ( count_active_patients(patients) )
+    print ( unique_conditions(patients) )
+    print ( count_by_condition(patients) )
     pass
