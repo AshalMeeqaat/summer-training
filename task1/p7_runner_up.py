@@ -16,19 +16,17 @@ def find_runner_up(scores: list[int]) -> int:
     """
     # TODO: Remove duplicate scores, then return the second largest value.
     new_list = []
-    max = 0
     for score in scores:
         if score not in new_list:
             new_list.append(score)
-        
+
     new_list.sort()
-    print (new_list)
-    if new_list :
+    print(new_list)
+    if new_list:
         return new_list[-2]
-    else : 
+    else:
         return None
-        
-        
+
     pass
 
 

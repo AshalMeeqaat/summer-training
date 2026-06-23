@@ -23,16 +23,15 @@ def label_risk(risk_score: int) -> str:
         return "invalid"
     elif risk_score < 50:
         return "low"
-    elif risk_score >= 50 and risk_score <=74 :
+    elif risk_score >= 50 and risk_score <= 74:
         return "medium"
-    elif risk_score >=75:
+    elif risk_score >= 75:
         return "high"
     pass
 
 
 def add_risk_labels(patient_records: list[dict]) -> list[dict]:
     """Return copies of patient records with a risk_label field added."""
-    
     patient_with_risk_label = []
 
     for patient in patient_records:
@@ -51,27 +50,19 @@ def add_risk_labels(patient_records: list[dict]) -> list[dict]:
 def build_triage_report(patient_records: list[dict]) -> dict:
     """Build a triage triage_triage_report from patient records."""
     # TODO: Build and return final triage_triage_report.
-    
+
     labels_of_risk = add_risk_labels(patient_records)
 
     triage_report = {
-        "summary": {
-            "total_patients": len(labels_of_risk)
-        },
-        "risk_counts": {
-            "low": 0,
-            "medium": 0,
-            "high": 0
-        },
-        "active_high_risk_patients": []
+        "summary": {"total_patients": len(labels_of_risk)},
+        "risk_counts": {"low": 0, "medium": 0, "high": 0},
+        "active_high_risk_patients": [],
     }
 
     for patient in labels_of_risk:
-
         label = patient["risk_label"]
         triage_report["risk_counts"][label] += 1
         if patient["active"] and label == "high":
-            
             triage_report["active_high_risk_patients"].append(patient)
 
     return triage_report
@@ -84,8 +75,8 @@ if __name__ == "__main__":
     print("Triage report :")
     print(triage_report)
     risk_count = 67
-    print ("\nThe risk status at ", risk_count ,  " is: ", label_risk(risk_count))
-    print ( "\nPatient list with risk labels: \n" , add_risk_labels(patients) )
+    print("\nThe risk status at ", risk_count, " is: ", label_risk(risk_count))
+    print("\nPatient list with risk labels: \n", add_risk_labels(patients))
     # TODO: Add assertions after implementing the functions.
     print("\n\nchecking assertions... ")
     assert label_risk(10) == "Low"

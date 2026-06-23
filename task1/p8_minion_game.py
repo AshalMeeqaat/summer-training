@@ -32,10 +32,15 @@ def minion_game(word: str) -> str:
 
     for i in range(word_length):
         for j in range(i + 1, word_length + 1):
-
             substring = word[i:j]
 
-            if substring[0] == 'A' or substring[0] == 'E' or substring[0] == 'I' or substring[0] == 'O' or substring[0] == 'U' :
+            if (
+                substring[0] == "A"
+                or substring[0] == "E"
+                or substring[0] == "I"
+                or substring[0] == "O"
+                or substring[0] == "U"
+            ):
                 kevin_score += 1
             else:
                 stuart_score += 1
@@ -46,7 +51,7 @@ def minion_game(word: str) -> str:
         return f"Kevin {kevin_score}"
     else:
         return "Draw"
-    
+
     pass
 
 

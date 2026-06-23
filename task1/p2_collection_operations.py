@@ -24,7 +24,7 @@ def list_operations(conditions: list[str]) -> list[str]:
     conditions_copy = conditions.copy()
     conditions_copy.append("cardiac")
     conditions_copy.remove("asthma")
-    
+
     conditions_copy.sort()
     return conditions_copy
     pass
