@@ -142,7 +142,8 @@ def patch_patient(patient_id: int, updated_data: PatientUpdate):
         status_code=404,
         detail="Patient not found"
     )
-    
+
+# deletion 
 @router.delete(
     "/{patient_id}",
     status_code=status.HTTP_204_NO_CONTENT,
@@ -158,3 +159,4 @@ def delete_patient(patient_id: int):
         status_code=404,
         detail="Patient not found"
     )
+    
