@@ -85,3 +85,28 @@ def create_patient(patient: PatientCreate):
     patients.append(new_patient)
 
     return new_patient
+
+@router.put(
+    "/{patient_id}",
+    response_model=PatientRead,
+    summary="Replace a patient",
+)
+def update_patient(patient_id: int, updated_patient: PatientCreate):
+    for index, patient in enumerate(patients):
+        if patient["id"] == patient_id:
+            new_patient = {
+                "id": patient_id,
+                "name": updated_patient.name,
+                "age": updated_patient.age,
+                "condition": updated_patient.condition,
+                "risk_score": updated_patient.risk_score,
+                "active": updated_patient.active,
+            }
+
+            patients[index] = new_patient
+            return new_patient
+
+    raise HTTPException(
+        status_code=404,
+        detail="Patient not found"
+    )
