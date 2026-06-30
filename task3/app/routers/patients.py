@@ -110,3 +110,35 @@ def update_patient(patient_id: int, updated_patient: PatientCreate):
         status_code=404,
         detail="Patient not found"
     )
+    
+    
+@router.patch(
+    "/{patient_id}",
+    response_model=PatientRead,
+    summary="Partially update a patient",
+)
+def patch_patient(patient_id: int, updated_data: PatientUpdate):
+    for patient in patients:
+        if patient["id"] == patient_id:
+
+            if updated_data.name is not None:
+                patient["name"] = updated_data.name
+
+            if updated_data.age is not None:
+                patient["age"] = updated_data.age
+
+            if updated_data.condition is not None:
+                patient["condition"] = updated_data.condition
+
+            if updated_data.risk_score is not None:
+                patient["risk_score"] = updated_data.risk_score
+
+            if updated_data.active is not None:
+                patient["active"] = updated_data.active
+
+            return patient
+
+    raise HTTPException(
+        status_code=404,
+        detail="Patient not found"
+    )
