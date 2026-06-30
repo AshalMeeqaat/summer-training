@@ -10,6 +10,8 @@ Then open the interactive docs at http://127.0.0.1:8000/docs
 """
 
 from fastapi import FastAPI
+from app.routers import patients
+
 
 app = FastAPI(
     title="Patient Management API",
@@ -33,3 +35,5 @@ def health() -> dict[str, str]:
 # TODO: create app/routers/patients.py and register it here, e.g.
 #     from app.routers import patients
 #     app.include_router(patients.router)
+
+app.include_router(patients.router)
