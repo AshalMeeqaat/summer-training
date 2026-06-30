@@ -142,3 +142,19 @@ def patch_patient(patient_id: int, updated_data: PatientUpdate):
         status_code=404,
         detail="Patient not found"
     )
+    
+@router.delete(
+    "/{patient_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete a patient",
+)
+def delete_patient(patient_id: int):
+    for index, patient in enumerate(patients):
+        if patient["id"] == patient_id:
+            patients.pop(index)
+            return
+
+    raise HTTPException(
+        status_code=404,
+        detail="Patient not found"
+    )
