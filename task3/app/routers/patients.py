@@ -85,51 +85,51 @@ def update_patient(
     return patient
     
     
-# @router.patch(
-#     "/{patient_id}",
-#     response_model=PatientRead,
-#     summary="Partially update a patient",
-# )
-# def patch_patient(patient_id: int, updated_data: PatientUpdate):
-#     for patient in patients:
-#         if patient["id"] == patient_id:
+@router.patch(
+    "/{patient_id}",
+    response_model=PatientRead,
+    summary="Partially update a patient",
+)
+def patch_patient(
+    patient_id: int,
+    updated_data: PatientUpdate,
+    session: Session = Depends(get_session),
+):
+    patient = session.get(Patient, patient_id)
 
-#             if updated_data.name is not None:
-#                 patient["name"] = updated_data.name
+    if not patient:
+        raise HTTPException(
+            status_code=404,
+            detail="Patient not found",
+        )
 
-#             if updated_data.age is not None:
-#                 patient["age"] = updated_data.age
+    update_data = updated_data.model_dump(exclude_unset=True)
 
-#             if updated_data.condition is not None:
-#                 patient["condition"] = updated_data.condition
+    for key, value in update_data.items():
+        setattr(patient, key, value)
 
-#             if updated_data.risk_score is not None:
-#                 patient["risk_score"] = updated_data.risk_score
+    session.add(patient)
+    session.commit()
+    session.refresh(patient)
 
-#             if updated_data.active is not None:
-#                 patient["active"] = updated_data.active
+    return patient
 
-#             return patient
+@router.delete(
+    "/{patient_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete a patient",
+)
+def delete_patient(
+    patient_id: int,
+    session: Session = Depends(get_session),
+):
+    patient = session.get(Patient, patient_id)
 
-#     raise HTTPException(
-#         status_code=404,
-#         detail="Patient not found"
-#     )
+    if not patient:
+        raise HTTPException(
+            status_code=404,
+            detail="Patient not found",
+        )
 
-# # deletion 
-# @router.delete(
-#     "/{patient_id}",
-#     status_code=status.HTTP_204_NO_CONTENT,
-#     summary="Delete a patient",
-# )
-# def delete_patient(patient_id: int):
-#     for index, patient in enumerate(patients):
-#         if patient["id"] == patient_id:
-#             patients.pop(index)
-#             return
-
-#     raise HTTPException(
-#         status_code=404,
-#         detail="Patient not found"
-#     )
-    
+    session.delete(patient)
+    session.commit()
