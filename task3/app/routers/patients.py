@@ -39,7 +39,26 @@ def get_patients(
     patients = session.exec(statement).all()
 
     return patients
-    
+
+@router.get(
+    "/{patient_id}",
+    response_model=PatientRead,
+    summary="Get a patient by ID",
+)
+def get_patient(
+    patient_id: int,
+    session: Session = Depends(get_session),
+):
+    patient = session.get(Patient, patient_id)
+
+    if not patient:
+        raise HTTPException(
+            status_code=404,
+            detail="Patient not found",
+        )
+
+    return patient
+
 @router.post(
     "/",
     response_model=PatientRead,
