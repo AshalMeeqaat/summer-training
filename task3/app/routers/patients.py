@@ -3,7 +3,8 @@ from sqlmodel import Session, select
 
 from app.database import get_session
 from app.models import Patient, PatientCreate, PatientRead, PatientUpdate
-
+from app.auth import get_current_user
+from app.models import User
 
 router = APIRouter(
     prefix="/patients",
@@ -43,6 +44,7 @@ def get_patient(patient_id: int, session: Session = Depends(get_session)):
 def create_patient(
     patient: PatientCreate,
     session: Session = Depends(get_session),
+    user: User = Depends(get_current_user),
 ):
     db_patient = Patient.model_validate(patient)
 
@@ -61,8 +63,9 @@ def create_patient(
 )
 def update_patient(
     patient_id: int,
-    updated_patient: PatientCreate,
+    patient: PatientCreate,
     session: Session = Depends(get_session),
+    user: User = Depends(get_current_user),
 ):
     patient = session.get(Patient, patient_id)
 
@@ -94,6 +97,7 @@ def patch_patient(
     patient_id: int,
     updated_data: PatientUpdate,
     session: Session = Depends(get_session),
+    user: User = Depends(get_current_user)
 ):
     patient = session.get(Patient, patient_id)
 
@@ -122,6 +126,7 @@ def patch_patient(
 def delete_patient(
     patient_id: int,
     session: Session = Depends(get_session),
+    user: User = Depends(get_current_user)
 ):
     patient = session.get(Patient, patient_id)
 
