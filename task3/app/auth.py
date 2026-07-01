@@ -5,11 +5,20 @@ from passlib.context import CryptContext
 
 from app.config import settings
 
+
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlmodel import Session, select
+
+from app.database import get_session
+from app.models import User
+
 pwd_context = CryptContext(
     schemes=["bcrypt"],
     deprecated="auto",
 )
 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
@@ -36,3 +45,20 @@ def create_access_token(data: dict):
         settings.SECRET_KEY,
         algorithm=settings.ALGORITHM,
     )
+
+def authenticate_user(
+    username: str,
+    password: str,
+    session: Session,
+):
+    user = session.exec(
+        select(User).where(User.username == username)
+    ).first()
+
+    if not user:
+        return None
+
+    if not verify_password(password, user.hashed_password):
+        return None
+
+    return user
