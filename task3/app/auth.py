@@ -62,3 +62,36 @@ def authenticate_user(
         return None
 
     return user
+
+def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    session: Session = Depends(get_session),
+):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid authentication credentials",
+    )
+
+    try:
+        payload = jwt.decode(
+            token,
+            settings.SECRET_KEY,
+            algorithms=[settings.ALGORITHM],
+        )
+
+        username = payload.get("sub")
+
+        if username is None:
+            raise credentials_exception
+
+    except JWTError:
+        raise credentials_exception
+
+    user = session.exec(
+        select(User).where(User.username == username)
+    ).first()
+
+    if user is None:
+        raise credentials_exception
+
+    return user
