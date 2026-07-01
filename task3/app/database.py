@@ -1,8 +1,10 @@
 from sqlmodel import SQLModel, Session, create_engine
+from app.config import settings
 
-DATABASE_URL = "sqlite:///patients.db"
-
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(
+    settings.DATABASE_URL,
+    echo=True
+)
 
 
 def create_db_and_tables():
