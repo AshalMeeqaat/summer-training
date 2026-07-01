@@ -13,27 +13,32 @@ router = APIRouter(
 
 
 
-@router.get("/", response_model=list[PatientRead], summary="List all patients")
-def get_patients(session: Session = Depends(get_session)):
-    patients = session.exec(select(Patient)).all()
+
+@router.get(
+    "/",
+    response_model=list[PatientRead],
+    summary="List all patients",
+)
+def get_patients(
+    active: bool | None = None,
+    condition: str | None = None,
+    limit: int = 100,
+    offset: int = 0,
+    session: Session = Depends(get_session),
+):
+    statement = select(Patient)
+
+    if active is not None:
+        statement = statement.where(Patient.active == active)
+
+    if condition:
+        statement = statement.where(Patient.condition == condition)
+
+    statement = statement.offset(offset).limit(limit)
+
+    patients = session.exec(statement).all()
+
     return patients
-
-@router.get("/{patient_id}", response_model=PatientRead, summary="Get a patient by ID")
-def get_patient(patient_id: int, session: Session = Depends(get_session)):
-    patient = session.get(Patient, patient_id)
-
-    if not patient:
-        raise HTTPException(
-            status_code=404,
-            detail="Patient not found"
-        )
-
-    return patient
-
-    raise HTTPException(
-        status_code=404,
-        detail="Patient not found"
-    )
     
 @router.post(
     "/",
@@ -63,7 +68,7 @@ def create_patient(
 )
 def update_patient(
     patient_id: int,
-    patient: PatientCreate,
+    updated_patient: PatientCreate,
     session: Session = Depends(get_session),
     user: User = Depends(get_current_user),
 ):
