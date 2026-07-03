@@ -2,8 +2,7 @@ from fastapi import status
 from app.auth import create_access_token
 from sqlmodel import Session
 from app.database import engine
-from app.auth import authenticate_user, hash_password
-from app.models import User
+from app.auth import authenticate_user
 
 def test_register_user(client):
     response = client.post(
