@@ -16,6 +16,8 @@ pydantic-settings
 
 sqlmodel
 
+psycopg[binary]
+
 python-jose
 
 passlib[bcrypt]
