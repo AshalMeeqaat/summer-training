@@ -11,22 +11,29 @@ patient_names = ["Ayesha", "Omar", "Sara", "Bilal", "Hina", "Usman", "Maha"]
 
 def slicing_examples():
     """Return examples of list slicing."""
-    # TODO: Return first three IDs, last three IDs, and reversed IDs.
-    pass
+    first_three = patient_ids[0:3]
+    last_three = patient_ids[-3:]
+    reversed_ids = patient_ids[::-1]
+
+    return first_three, last_three, reversed_ids
 
 
 def loop_examples():
     """Practice range, enumerate, and zip."""
-    # TODO: Use enumerate to print numbered patient names.
-    # TODO: Use zip to pair IDs with names.
-    pass
+    for index, patient_name in enumerate(patient_names):
+        print(index, patient_name)
+
+    for patient_id, patient_name in zip(patient_ids, patient_names):
+        print(patient_id, patient_name)
 
 
 def comprehension_examples():
     """Return values created using comprehensions."""
-    # TODO: Create a list of even patient IDs.
-    # TODO: Create uppercase patient names.
-    pass
+    even_ids = [i for i in patient_ids if i % 2 == 0]
+
+    upper_names = [name.upper() for name in patient_names]
+
+    return even_ids, upper_names
 
 
 if __name__ == "__main__":

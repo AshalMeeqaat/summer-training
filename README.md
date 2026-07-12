@@ -8,6 +8,7 @@ yourself. Over the next several weeks you will sharpen your fundamentals, learn 
 real engineering teams build and ship software, and then put it all together by
 building something of your own.
 
+
 You will get stuck. You will hit confusing errors. That is exactly where the
 learning happens — push through it, ask good questions, and help the people next to
 you. Be curious, be consistent, and treat every task as practice for the real
@@ -74,7 +75,7 @@ your GitHub account. (The exact repository URL is shared in the channel — repl
 3. Track the original so you can sync new tasks:
 
    ```bash
-   git remote add upstream git@github.com:orydex/summer-training.git
+   git remote add upstream https://github.com/TeamOrydex/summer-training.git
    # later, to pull in newly added tasks:
    git fetch upstream
    git switch main

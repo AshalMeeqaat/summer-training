@@ -9,13 +9,22 @@ Adapted as a function so it can be tested automatically.
 sample_scores = [2, 3, 6, 6, 5]
 
 
-def find_runner_up(scores: list[int]) -> int:
+def find_runner_up(scores: list[int]) -> int | None:
     """Return the runner-up score: the second highest *distinct* value.
 
     Example: [2, 3, 6, 6, 5] -> 5 (6 is the highest, 5 is the runner-up).
     """
-    # TODO: Remove duplicate scores, then return the second largest value.
-    pass
+    highest = None
+    second_highest = None
+
+    for score in scores:
+        if highest is None or score > highest:
+            second_highest = highest
+            highest = score
+        elif score != highest and (second_highest is None or score > second_highest):
+            second_highest = score
+
+    return second_highest
 
 
 if __name__ == "__main__":
