@@ -15,34 +15,66 @@ patients = [
 
 def total_patients(patient_records):
     """Return the total number of patients."""
-    # TODO: Implement this function.
+    return len(patient_records)
     pass
 
 
 def average_age(patient_records):
     """Return the average patient age."""
-    # TODO: Implement this function.
+    sum_age = 0
+    for age in patient_records:
+        sum_age += age["age"]
+
+    avg_age = sum_age / len(patient_records)
+    return avg_age
     pass
 
 
 def count_active_patients(patient_records):
     """Return the number of active patients."""
-    # TODO: Implement this function.
+    active_count = 0
+    for active_patients in patient_records:
+        if active_patients["active"] == 1:
+            active_count += 1
+
+    return active_count
     pass
 
 
 def unique_conditions(patient_records):
     """Return a sorted list of unique conditions."""
-    # TODO: Implement this function.
+    unique_conditions = []
+
+    for conditions in patient_records:
+        unique_cond = conditions["condition"]
+
+        if unique_cond not in unique_conditions:
+            unique_conditions.append(unique_cond)
+
+    unique_conditions.sort()
+    return unique_conditions
     pass
 
 
 def count_by_condition(patient_records):
     """Return a dictionary containing patient count by condition."""
-    # TODO: Implement this function.
+    condition_counted_list = {}
+    for conditions in patient_records:
+        unique_cond = conditions["condition"]
+
+        if unique_cond in condition_counted_list:
+            condition_counted_list[unique_cond] += 1
+        else:
+            condition_counted_list[unique_cond] = 1
+
+    return condition_counted_list
     pass
 
 
 if __name__ == "__main__":
-    # TODO: Print the summary results clearly.
+    print("Total patients : ", total_patients(patients))
+    print("Average age is : ", average_age(patients))
+    print("Active patients are: ", count_active_patients(patients))
+    print("Unique conditions are : ", unique_conditions(patients))
+    print(count_by_condition(patients))
     pass
